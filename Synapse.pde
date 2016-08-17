@@ -1,6 +1,5 @@
 
-
-public class Synapse {
+public static class Synapse {
   public int     input = 0;
   public int     output = 0;
   public double  weight = 0;
@@ -16,6 +15,4 @@ public class Synapse {
     s.innovation = innovation;
     return s;
   }
- 
- 
 }
