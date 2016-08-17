@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public static class Genome {
   public List<Synapse> genes = new ArrayList<Synapse>();
@@ -59,7 +60,26 @@ public static class Genome {
   }
   
   public double[] evaluateNetwork(double[] input) {
-    return null;
+    for(int i = 0; i < Pool.instance.inputs; i++) {
+      network.get(i).value = input[i];
+    }
+    
+    for(Entry<Integer, Neuron> entry : network.entrySet()) {
+      if (entry.getKey() < Pool.instance.inputs + Pool.instance.outputs)
+        continue;
+      Neuron neuron = entry.getValue();
+      
+      double sum = 0;
+      
+      for (Synapsis incoming : neuron.inputs) {
+        Neuron other = network.get(incoming.input);
+        sum += incoming.weight * other.value;
+      }
+      
+      if(!neuron.inputs.isEmpty()) {
+        neuron.value = Neuron.sigmoid(sum);
+      }
+    }
   }
   
   public void generateNetwork() {
