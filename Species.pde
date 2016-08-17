@@ -24,7 +24,12 @@ public static class Species {
   }
   
   public void calculateAverageFitness() {
+    double total = 0;
+    for (Genome genome : genomes) {
+      total += genome.globalRank;
+    }
     
+    averageFitness = total / genomes.size();
   }
   
   public Genome crossover(Genome g1, Genome g2) {
